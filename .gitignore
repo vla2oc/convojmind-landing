@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# оставляем пример переменных в репозитории — LANDING_PLAN §6
+!.env.example
