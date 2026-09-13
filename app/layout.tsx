@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { MotionProvider } from "./_motion/MotionProvider";
 
 // subsets: latin-ext обязателен — без него польские ą ć ę ł ń ó ś ź ż
 // подставятся системным шрифтом. Пункт 6 критерия готовности.
@@ -22,7 +23,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pl"
       className={`${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Клиентский провайдер motion; children остаются серверными. */}
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }

@@ -17,6 +17,15 @@
 
   /* заголовки; --font-montserrat приходит из next/font на <html> */
   --font-heading: var(--font-montserrat), var(--font-display);
+
+  /* Пружина для CSS-переходов (утилита `ease-spring`). Кривая посчитана из
+     уравнения затухающего осциллятора (ζ=0.72, ω=8.5): перелёт 3,8 % на середине,
+     к концу ровно 1. Для reveal при скролле пружину даёт motion (app/_motion/springs.ts). */
+  --ease-spring: linear(
+    0, 0.04, 0.137, 0.263, 0.399, 0.532, 0.652, 0.756, 0.841, 0.907, 0.957, 0.993,
+    1.016, 1.03, 1.037, 1.038, 1.037, 1.033, 1.028, 1.023, 1.018, 1.013, 1.009, 1.006,
+    1.003, 1.002, 1, 0.999, 1
+  );
 }
 
 :root {
@@ -29,6 +38,11 @@
   --primary:       #9EF01A;  /* акцент, из приложения */
   --on-primary:    #0d0d0d;  /* текст НА акценте — только тёмный */
   --danger:        #F87171;  /* только для блока «что ломается сейчас» */
+
+  /* Производные от --primary для реакции на наведение: подложка и рамка.
+     Не новый цвет, а прозрачность акцента (DECISIONS.md, 2026-09-13). */
+  --primary-soft:  color-mix(in srgb, var(--primary) 6%, transparent);
+  --primary-line:  color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 /* мост в утилиты Tailwind: bg-surface, text-muted, border-surface-2, ... */
@@ -41,6 +55,8 @@
   --color-primary:    var(--primary);
   --color-on-primary: var(--on-primary);
   --color-danger:     var(--danger);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-line: var(--primary-line);
 }
 
 body {
@@ -53,4 +69,44 @@ body {
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------
+   Вход hero — на CSS, не на motion: h1 это LCP-элемент, а начальное opacity:0
+   от motion попало бы в SSR-разметку и текст ждал бы гидрации. CSS стартует
+   с первой отрисовки и работает без JS (DECISIONS.md, 2026-09-13).
+   ------------------------------------------------------------------ */
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Слова h1: --i — порядковый номер слова, шаг 30 мс. 16 слов = последнее
+   стартует на ~0.45 с, вся фраза на экране за ~1 с. Шаг и длительность
+   подобраны по Lighthouse: h1 — LCP-элемент, каждые 100 мс задержки последнего
+   слова сдвигают LCP (замер 2026-09-13 в STATE.md). */
+.hero-word {
+  display: inline-block;
+  animation: hero-in 0.5s var(--ease-spring) both;
+  animation-delay: calc(var(--i) * 30ms);
+}
+
+/* Подзаголовок, кнопки, строка статуса — следом, --d задаётся в разметке. */
+.hero-in {
+  animation: hero-in 0.5s var(--ease-spring) both;
+  animation-delay: var(--d, 0.5s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  .hero-in {
+    animation: none;
+  }
 }

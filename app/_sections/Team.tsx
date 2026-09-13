@@ -1,3 +1,5 @@
+import { Reveal, RevealItem } from "../_motion/Reveal";
+
 // S7. Текст — docs/COPY.md, раздел S7.
 // Место выбрано по вопросу читателя: он только что прочитал «дай пять своих рейсов»
 // и следующим спрашивает, кто мы такие. Фото не ставим (DECISIONS.md, 2026-09-08).
@@ -30,19 +32,19 @@ export function Team() {
   return (
     <section className="border-t border-surface-2">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-        <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
+        <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Kto za tym stoi
-        </h2>
+        </Reveal>
 
-        <ul className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
+        <Reveal as="ul" stagger={0.1} className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
           {people.map((person) => (
-            <li key={person.name} className="flex flex-col gap-2">
+            <RevealItem as="li" key={person.name} className="flex flex-col gap-2">
               <h3 className="font-heading text-lg font-semibold text-text">{person.name}</h3>
               <p className="text-sm text-muted">{person.role}</p>
               <p className="mt-1 leading-relaxed text-text">{person.bio.join(" ")}</p>
-            </li>
+            </RevealItem>
           ))}
-        </ul>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,63 +1,55 @@
-// S5. Текст — docs/COPY.md, раздел S5.
+import { Reveal, RevealItem } from "../_motion/Reveal";
+
+// S5. Текст — docs/COPY.md, раздел S5 (сокращён 2026-09-13, решение владельца).
 // Три блока идут вертикально, не в ряд: ряд из трёх цифр обесценивает каждую (CLAUDE.md §5.4).
-const blockClass =
-  "border-t border-surface-2 pt-10 first:border-0 first:pt-0 sm:pt-12 sm:first:pt-0";
+// В каждом блоке одна поднятая строка (Montserrat) и одна тихая (muted).
+const blocks = [
+  {
+    // Единственное число на всей странице. Слово Cel стоит в самой фразе тем же кеглем (§5.4).
+    lead: (
+      <>
+        Cel: podajesz okno <span className="text-primary">±30 minut</span> zamiast dwóch godzin
+        zapasu.
+      </>
+    ),
+    quiet: "To cel, nie wynik. Sprawdzisz go na pięciu swoich trasach.",
+  },
+  {
+    // Функция продукта из S3 шаг 2, а не обещание результата.
+    lead: "Parking masz wybrany przed wyjazdem.",
+    quiet: "Godzina szukania to godzina wyjęta z dnia. Jedno auto — drobiazg. Cała flota, cały miesiąc — twój wynik.",
+  },
+  {
+    // Без числа, и стоит третьим: секция закрывается облегчением, а не цифрой.
+    lead: "Konflikt z normą widzisz przed wyjazdem, nie po fakcie.",
+    quiet: "Wtedy jeszcze da się przesunąć wyjazd, zmienić parking, uprzedzić klienta.",
+  },
+];
 
 export function Outcome() {
   return (
     <section className="border-t border-surface-2">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
-        <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
+        <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Co z tego masz
-        </h2>
+        </Reveal>
 
-        <div className="mt-12 flex max-w-2xl flex-col gap-10 sm:gap-12">
-          {/* Блок 1. Единственное число на всей странице. */}
-          <div className={blockClass}>
-            <p className="leading-relaxed text-text">
-              <span className="block">Dziś podajesz klientowi okno z dwugodzinnym zapasem.</span>
-              <span className="block">Nie dlatego, że chcesz. Dlatego, że dokładniej nie umiesz.</span>
-            </p>
-
-            {/* Слово Cel стоит в самой фразе и тем же кеглем, что число, — не в сноске (§5.4). */}
-            <p className="mt-6 font-heading text-xl font-semibold leading-snug text-text sm:text-2xl">
-              Cel: podajesz okno <span className="text-primary">±30 minut</span> zamiast dwóch
-              godzin zapasu.
-            </p>
-
-            <p className="mt-6 leading-relaxed text-text">
-              <span className="block">
-                To cel, nie wynik. Nie mamy jeszcze ani jednej przejechanej trasy.
-              </span>
-              <span className="block">Dlatego: daj nam pięć swoich i sam powiedz, czy się zgadza.</span>
-            </p>
-          </div>
-
-          {/* Блок 2. Масштаб словами, без арифметики (DECISIONS.md, 2026-09-08). */}
-          <div className={blockClass}>
-            <p className="leading-relaxed text-text">
-              <span className="block">Godzina na szukanie parkingu to godzina wyjęta z dnia.</span>
-              <span className="block">Normy nie da się dokupić ani nadrobić.</span>
-            </p>
-            <p className="mt-6 leading-relaxed text-text">
-              <span className="block">Jedno auto, jeden dzień — drobiazg.</span>
-              <span className="block">Cała flota, cały miesiąc — to już twój wynik.</span>
-            </p>
-          </div>
-
-          {/* Блок 3. Без числа, и стоит третьим: секция закрывается облегчением, а не цифрой. */}
-          <div className={blockClass}>
-            <p className="leading-relaxed text-text">
-              Konflikt z normą widzisz przed wyjazdem, nie po fakcie.
-            </p>
-            <p className="mt-6 leading-relaxed text-text">
-              <span className="block">
-                Wtedy jeszcze można przesunąć wyjazd, zmienić parking, uprzedzić klienta.
-              </span>
-              <span className="block">Po fakcie zostaje liczenie strat.</span>
-            </p>
-          </div>
-        </div>
+        <Reveal as="ul" stagger={0.12} className="mt-12 flex max-w-2xl flex-col">
+          {blocks.map((b, i) => (
+            <RevealItem
+              as="li"
+              key={b.quiet}
+              className={
+                i === 0 ? "pb-10 sm:pb-12" : "border-t border-surface-2 py-10 last:pb-0 sm:py-12"
+              }
+            >
+              <p className="font-heading text-xl font-semibold leading-snug text-text sm:text-2xl">
+                {b.lead}
+              </p>
+              <p className="mt-4 max-w-xl leading-relaxed text-muted">{b.quiet}</p>
+            </RevealItem>
+          ))}
+        </Reveal>
       </div>
     </section>
   );

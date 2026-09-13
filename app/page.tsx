@@ -6,13 +6,15 @@ import { Gap } from "./_sections/Gap";
 import { Outcome } from "./_sections/Outcome";
 import { Pilot } from "./_sections/Pilot";
 import { Team } from "./_sections/Team";
+import { Contact } from "./_sections/Contact";
+import { Footer } from "./_sections/Footer";
 
 // 'error' роняет сборку, если на странице появится cookies(), headers() или
 // searchParams. 'force-static' этого не делает — он молча возвращает из них
 // пустые значения (docs 01-app/02-guides/caching-without-cache-components.md:104).
 export const dynamic = "error";
 
-// Форма (S8) и футер — шаг C. Текст всех секций взят из docs/COPY.md дословно.
+// Текст всех секций взят из docs/COPY.md дословно.
 export default function Home() {
   return (
     <>
@@ -25,7 +27,9 @@ export default function Home() {
         <Outcome />
         <Pilot />
         <Team />
+        <Contact />
       </main>
+      <Footer />
     </>
   );
 }
