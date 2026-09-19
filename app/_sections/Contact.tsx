@@ -1,7 +1,7 @@
 import { CtaLink } from "../_motion/CtaLink";
 import { Reveal } from "../_motion/Reveal";
 
-// S8. Текст — docs/COPY.md, раздел S8.
+// S7. Текст — docs/COPY.md, раздел S7.
 // Пока не форма, а прямое письмо (решение владельца 2026-09-13): аккаунта Resend
 // ещё нет, а форма без ключа отвечает отказом и теряет человека. Форма лежит
 // готовая в ContactForm.tsx и возвращается одной строкой в app/page.tsx.
@@ -12,7 +12,7 @@ export function Contact() {
   const href = `mailto:${EMAIL}?subject=${encodeURIComponent(SUBJECT)}`;
 
   return (
-    <section id="kontakt" className="scroll-mt-16 border-t border-surface-2 bg-surface">
+    <section id="kontakt" className="scroll-mt-16">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <Reveal>
           <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
@@ -20,7 +20,7 @@ export function Contact() {
           </h2>
 
           <p className="mt-4 max-w-2xl leading-relaxed text-text">
-            Napisz w jednym zdaniu: ile masz aut i na jakich trasach jeżdżą.
+            Napisz jedno zdanie: ile masz aut i gdzie jeżdżą.
           </p>
           <p className="mt-2 text-muted">Odpowiadamy w ciągu jednego dnia roboczego.</p>
         </Reveal>

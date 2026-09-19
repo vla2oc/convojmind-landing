@@ -29,34 +29,39 @@
 }
 
 :root {
-  /* цвет */
-  --bg:            #0d0d0d;  /* фон страницы, из приложения */
-  --surface:       #141414;  /* карточки, секции с подложкой */
-  --surface-2:     #1c1c1c;  /* границы блоков, разделители */
+  /* Палитра 70-20-10 (владелец, 2026-09-19): 70 — --bg, 20 — --secondary, 10 — --primary.
+     Остальное — оттенки и прозрачности этих трёх, не новые цвета.
+     Правка владельца 2026-09-19 (вечер): зелёный ушёл с поверхностей — он только линия:
+     рамка карточек S2/S4/S6 и разделители между секциями. Страница одним --bg, без чередования. */
+  --bg:            #0d0d0d;  /* 70: фон страницы, из приложения */
+  --surface:       #141414;  /* подложка схемы S3 — единственное место */
+  --surface-2:     #1c1c1c;  /* линии на тёмном: шапка, разделители внутри карточек, плашки */
   --text:          #f5f5f5;  /* основной текст */
-  --text-muted:    #a3a3a3;  /* подписи, вторичное */
-  --primary:       #9EF01A;  /* акцент, из приложения */
+  --text-muted:    #a3a3a3;  /* подписи, вторичное — 14–16 px */
+  --primary:       #9EF01A;  /* 10: акцент; рамка карточки при наведении и нажатии */
   --on-primary:    #0d0d0d;  /* текст НА акценте — только тёмный */
-  --danger:        #F87171;  /* только для блока «что ломается сейчас» */
+  --secondary:     #224f10;  /* 20: рамка карточек в покое, разделители секций (Divider) */
+  --danger:        #F87171;  /* только схема S3, «brak miejsc» */
 
-  /* Производные от --primary для реакции на наведение: подложка и рамка.
-     Не новый цвет, а прозрачность акцента (DECISIONS.md, 2026-09-13). */
-  --primary-soft:  color-mix(in srgb, var(--primary) 6%, transparent);
-  --primary-line:  color-mix(in srgb, var(--primary) 40%, transparent);
+  /* Прозрачный акцент для линии схемы S3. Не новый цвет, а прозрачность --primary
+     (DECISIONS.md, 2026-09-13). `transparent` стоит первым намеренно: Tailwind берёт
+     первый аргумент как запасное значение для браузеров без color-mix — так там
+     просто нет линии, а не сплошной лайм (DECISIONS.md, 2026-09-19). */
+  --primary-line:  color-mix(in srgb, transparent 60%, var(--primary));
 }
 
 /* мост в утилиты Tailwind: bg-surface, text-muted, border-surface-2, ... */
 @theme inline {
-  --color-bg:         var(--bg);
-  --color-surface:    var(--surface);
-  --color-surface-2:  var(--surface-2);
-  --color-text:       var(--text);
-  --color-muted:      var(--text-muted);
-  --color-primary:    var(--primary);
-  --color-on-primary: var(--on-primary);
-  --color-danger:     var(--danger);
-  --color-primary-soft: var(--primary-soft);
+  --color-bg:           var(--bg);
+  --color-surface:      var(--surface);
+  --color-surface-2:    var(--surface-2);
+  --color-text:         var(--text);
+  --color-muted:        var(--text-muted);
+  --color-primary:      var(--primary);
+  --color-on-primary:   var(--on-primary);
+  --color-danger:       var(--danger);
   --color-primary-line: var(--primary-line);
+  --color-secondary:    var(--secondary);
 }
 
 body {

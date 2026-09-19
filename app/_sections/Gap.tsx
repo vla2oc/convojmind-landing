@@ -12,13 +12,13 @@ const rows = [
   {
     before: "Czy jest ",
     accent: "gdzie",
-    after: " stanąć o tej godzinie",
+    after: " stanąć",
     who: ["aplikacje parkingowe"],
   },
   {
     before: "O której ",
     accent: "naprawdę",
-    after: " tam będzie",
+    after: " dojedzie",
     who: ["platformy ETA"],
   },
 ];
@@ -28,13 +28,14 @@ const HEAD_RIGHT = "Kto to dziś potrafi";
 
 // Не <table>: на 360 px таблица либо ползёт вбок, либо сжимает колонки в столбик букв.
 // Тот же смысл на grid — три карточки на мобильном, две колонки от sm (LANDING_PLAN §7).
-// Акцентное слово — --primary, «кто умеет» — плашки: раньше всё было одним серым текстом.
+// Строка — та же карточка, что в S2: тёмная, зелёная рамка, отклик — RevealItem hover;
+// акцентное слово — --primary; «кто умеет» — плашки с тихой рамкой.
 const rowClass =
-  "rounded-2xl border border-surface-2 bg-bg p-5 transition-[border-color,background-color] duration-300 ease-spring hover:border-primary-line hover:bg-primary-soft sm:grid sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8 sm:rounded-xl sm:px-4 sm:py-5";
+  "rounded-2xl border border-secondary transition-[border-color] duration-300 ease-spring hover:border-primary data-pressed:border-primary p-5 sm:grid sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8 sm:rounded-xl sm:px-4 sm:py-5";
 
 export function Gap() {
   return (
-    <section className="border-t border-surface-2 bg-surface">
+    <section>
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Czego brakuje w tym, co już masz
@@ -71,14 +72,13 @@ export function Gap() {
           </Reveal>
         </div>
 
-        {/* Первая строка — удар, заголовочным кеглем. Вторая — тише. */}
+        {/* Первая строка — удар, заголовочным кеглем. Вторая — тише, одна. */}
         <Reveal className="mt-12 max-w-2xl">
           <p className="font-heading text-xl font-semibold leading-snug text-text sm:text-2xl">
             Każde z osobna ma dziś każdy. Razem — <span className="text-primary">nikt</span>.
           </p>
           <p className="mt-4 leading-relaxed text-muted">
-            <span className="block">Grafik może być legalny na papierze.</span>
-            <span className="block">Z odpoczynkiem w szczerym polu i tak go nie wykonasz.</span>
+            Grafik bez parkingu jest legalny tylko na papierze.
           </p>
         </Reveal>
       </div>

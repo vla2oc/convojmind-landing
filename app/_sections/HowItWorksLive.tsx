@@ -182,7 +182,9 @@ function DiagramNarrow() {
   );
 }
 
-export function HowItWorksLive({ steps }: { steps: string[] }) {
+export type Step = { lead: string; quiet: string };
+
+export function HowItWorksLive({ steps }: { steps: Step[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const state = useReveal(ref);
 
@@ -190,11 +192,12 @@ export function HowItWorksLive({ steps }: { steps: string[] }) {
     <m.div ref={ref} initial={false} animate={state}>
       <ol className="mt-12 grid gap-8 sm:grid-cols-3">
         {steps.map((step, i) => (
-          <li key={step} className="flex flex-col gap-3">
+          <li key={step.lead} className="flex flex-col gap-3">
             <m.span className="font-heading text-3xl font-bold" variants={stepLight(STEP_AT[i])}>
               {i + 1}
             </m.span>
-            <p className="leading-relaxed text-text">{step}</p>
+            <p className="font-heading text-lg font-semibold leading-snug text-text">{step.lead}</p>
+            <p className="leading-relaxed text-muted">{step.quiet}</p>
           </li>
         ))}
       </ol>

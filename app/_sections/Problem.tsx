@@ -4,33 +4,35 @@ import { Reveal, RevealItem } from "../_motion/Reveal";
 // Цену бездействия называем один раз и спокойно: без красного, без нагнетания (CLAUDE.md §5.6).
 //
 // Три уровня в карточке, чтобы текст не слипался (COPY.md, «Ритм карточек»):
-// хук — Montserrat, сцена — muted, цена — после разделителя, цветом текста.
+// хук — Montserrat, сцена — тише, цена — после разделителя, цветом текста.
 const cards = [
   {
     hook: "22:40. Dzwoni kierowca: na MOP-ie nie ma miejsc.",
     scene: "Jedzie dalej. Szuka. W końcu staje.",
-    cost: "Tej godziny nie odzyskasz. Czasu jazdy nie da się dokupić.",
+    cost: "Tej godziny jazdy nie odzyskasz.",
   },
   {
     hook: "Klient pyta, o której będzie towar.",
-    scene: "Podajesz okno z dwugodzinnym zapasem — bo dokładniej nie umiesz.",
-    cost: "Ten zapas nie jest za darmo. Klient go pamięta.",
+    scene: "Podajesz dwie godziny zapasu. Dokładniej nie wiesz.",
+    cost: "Ten zapas kosztuje. Klient go pamięta.",
   },
   {
     hook: "Tachograf nie negocjuje.",
-    scene: "Naruszenie normy widzisz wtedy, kiedy jest już naruszeniem.",
-    cost: "Mandat to rachunek za to, czego nie było widać wcześniej.",
+    scene: "Naruszenie widzisz dopiero po fakcie.",
+    cost: "Mandat to rachunek za to, czego nie widziałeś.",
   },
 ];
 
-// Карточка отвечает на курсор: рамка и подложка из прозрачного акцента (CSS),
-// подъём на 3 px — RevealItem hover.
+// Карточка — тёмная, с тонкой зелёной рамкой (--secondary); зелёный на странице
+// только линия (владелец, 2026-09-19). Наведение и нажатие: рамка загорается акцентом
+// (`hover:` и `data-pressed:` — флаг ставит RevealItem, не `:active`: на касании он у <li>
+// не срабатывает), подъём на 3 px и сжатие на 2 % с пружиной — RevealItem hover.
 const cardClass =
-  "flex flex-col gap-5 rounded-2xl border border-surface-2 bg-bg p-6 transition-[border-color,background-color] duration-300 ease-spring hover:border-primary-line hover:bg-primary-soft";
+  "flex flex-col gap-5 rounded-2xl border border-secondary transition-[border-color] duration-300 ease-spring hover:border-primary data-pressed:border-primary p-6";
 
 export function Problem() {
   return (
-    <section className="border-t border-surface-2 bg-surface">
+    <section>
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Który z tych wieczorów znasz?

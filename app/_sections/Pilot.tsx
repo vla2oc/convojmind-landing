@@ -5,14 +5,14 @@ import { Reveal, RevealItem } from "../_motion/Reveal";
 // не «дорого», а «меня втянут во внедрение».
 const steps = [
   "Rozmowa. Trzydzieści minut, bez prezentacji.",
-  "Bierzemy pięć twoich prawdziwych tras — takich, które już przejechałeś.",
+  "Bierzemy pięć tras, które już przejechałeś.",
   "Pokazujemy grafik i okno przyjazdu dla każdej.",
-  "Mówisz, czy zgadza się z tym, co było naprawdę.",
+  "Porównujesz z tym, co było naprawdę.",
 ];
 
 export function Pilot() {
   return (
-    <section id="pilotaz" className="scroll-mt-16 border-t border-surface-2 bg-surface">
+    <section id="pilotaz" className="scroll-mt-16">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Co się stanie, jeśli napiszesz
@@ -32,17 +32,18 @@ export function Pilot() {
           ))}
         </Reveal>
 
-        {/* Последняя строка важнее остальных: она заранее разрешает ему сказать «нет». */}
+        {/* Последняя строка важнее остальных: она заранее разрешает ему сказать «нет».
+            Плашка — та же карточка, что в S2. */}
         <Reveal stagger={0.1} className="mt-12 max-w-2xl">
           <RevealItem
             hover
-            className="rounded-2xl border border-surface-2 bg-bg p-6 transition-[border-color,background-color] duration-300 ease-spring hover:border-primary-line hover:bg-primary-soft"
+            className="rounded-2xl border border-secondary transition-[border-color] duration-300 ease-spring hover:border-primary data-pressed:border-primary p-6"
           >
             <p className="font-heading text-lg font-semibold leading-snug text-text">
               Bez instalacji. Bez integracji. Bez opłat.
             </p>
             <p className="mt-3 leading-relaxed text-text">
-              Jeśli się nie zgadza — powiesz nam to i na tym koniec.
+              Jeśli się nie zgadza — mówisz nam to i koniec.
             </p>
           </RevealItem>
         </Reveal>

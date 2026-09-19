@@ -19,7 +19,7 @@ export function Contact() {
   const [state, formAction, pending] = useActionState(submitLead, INITIAL_LEAD_STATE);
 
   return (
-    <section id="kontakt" className="scroll-mt-16 border-t border-surface-2 bg-surface">
+    <section id="kontakt" className="scroll-mt-16">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <h2 className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
           Umów rozmowę

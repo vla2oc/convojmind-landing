@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { m } from "motion/react";
 import { reveal, staggerParent, snappy } from "./springs";
 import { useReveal } from "./useReveal";
@@ -51,19 +51,36 @@ export function Reveal({ as = "div", className, id, stagger, children }: RevealP
 type RevealItemProps = {
   as?: Tag;
   className?: string;
-  /** Карточка реагирует на курсор: чуть приподнимается. Рамку и подложку даёт CSS-класс. */
+  /** Карточка отвечает на курсор и на нажатие: приподнимается на 3 px, при нажатии
+   *  сжимается на 2 % и пружиной возвращается; рамку красит CSS-класс по `hover:`
+   *  и `data-pressed:` одним и тем же переходом. Флаг нажатия ставит motion
+   *  (onTapStart/onTap/onTapCancel), а не CSS `:active`: на касании `:active` у <li>
+   *  не срабатывает, а press-жест motion идёт по pointer-событиям и работает мышью,
+   *  пальцем и с клавиатуры (проверено CDP 2026-09-19, DECISIONS.md). */
   hover?: boolean;
   children: ReactNode;
 };
 
 // Элемент лесенки внутри Reveal со stagger. Состояние наследует от родителя.
+// tabIndex={-1} на карточках обязателен: press-жест motion ставит tabIndex=0 всему,
+// что не кнопка и не ссылка и не имеет атрибута tabindex, — семь карточек стали бы
+// семью пустыми табстопами (motion-dom 13.2.0, gestures/press/index.mjs:87).
 export function RevealItem({ as = "div", className, hover, children }: RevealItemProps) {
   const Comp = tags[as] as typeof m.div;
+  const [pressed, setPressed] = useState(false);
+  const press = hover ? () => setPressed(true) : undefined;
+  const release = hover ? () => setPressed(false) : undefined;
   return (
     <Comp
       className={className}
       variants={reveal}
       whileHover={hover ? { y: -3, transition: snappy } : undefined}
+      whileTap={hover ? { scale: 0.98, transition: snappy } : undefined}
+      onTapStart={press}
+      onTap={release}
+      onTapCancel={release}
+      data-pressed={pressed || undefined}
+      tabIndex={hover ? -1 : undefined}
     >
       {children}
     </Comp>

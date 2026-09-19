@@ -5,17 +5,19 @@ import { CtaLink } from "../_motion/CtaLink";
 //
 // Вход — на CSS (.hero-word / .hero-in в globals.css), не на motion: h1 это
 // LCP-элемент, начальное opacity:0 от motion ждало бы гидрации. Слова
-// появляются по одному, шаг 45 мс — как будто с ним говорят, а не печатают.
+// появляются по одному, шаг 30 мс — как будто с ним говорят, а не печатают.
 //
-// Заголовок несёт все три вещи сразу: обязанность, наличие места, время приезда.
-// Каждая по отдельности есть у конкурентов, вместе — ни у кого. COPY.md, разбор в S1.
-const lines: { words: string[]; accentFrom?: number; tail?: string }[] = [
-  { words: ["Gdzie", "kierowca", "musi", "stanąć."] },
-  { words: ["Czy", "będzie", "tam", "miejsce."] },
-  { words: ["O", "której", "naprawdę", "dojedzie."] },
-  // Акцентом --primary — «przed wyjazdem», одно словосочетание, не вся строка;
-  // точка после него остаётся цветом текста.
-  { words: ["Wiesz", "to", "przed", "wyjazdem"], accentFrom: 2, tail: "." },
+// h1 говорит прямо, что это: маршрут, тахограф и стоянка в одном графике.
+// Прежние три вопроса заставляли догадываться (владелец, 2026-09-19).
+// Акцент --primary — одно слово, `jednym`: «в одном» и есть отличие (S4).
+// Слова сгруппированы в «связки»: однобуквенные `i`, `w` в польской типографике
+// не остаются в конце строки. Неразрывного пробела мало — между двумя
+// inline-block есть точка переноса и без пробела (CSS Text: атомарные инлайны
+// ведут себя как иероглифы), поэтому связка — свой inline-block с nowrap.
+// На 360 px без этого `parking` уезжал один на вторую строку.
+const lines: { chunks: string[][]; accent?: [chunk: number, word: number] }[] = [
+  { chunks: [["Trasa,"], ["tachograf"], ["i", "parking"]] },
+  { chunks: [["w", "jednym"], ["grafiku."]], accent: [0, 1] },
 ];
 
 function delay(seconds: number): CSSProperties {
@@ -26,36 +28,42 @@ export function Hero() {
   let i = 0;
   return (
     <section id="top" className="mx-auto max-w-5xl px-5 pb-20 pt-16 sm:pb-28 sm:pt-24">
-      <h1 className="max-w-3xl font-heading text-[28px] font-bold leading-[1.2] tracking-tight text-text sm:text-5xl sm:leading-[1.15]">
-        {lines.map((line, li) => (
-          <span key={line.words[0]} className={li === 3 ? "mt-5 block sm:mt-7" : "block"}>
-            {line.words.map((word, wi) => {
-              const accent = line.accentFrom !== undefined && wi >= line.accentFrom;
-              const last = wi === line.words.length - 1;
-              const style = { "--i": i++ } as CSSProperties;
-              return (
-                <span key={wi}>
-                  <span className="hero-word" style={style}>
-                    {accent ? <span className="text-primary">{word}</span> : word}
-                    {last ? line.tail : null}
-                  </span>
-                  {last ? null : " "}
+      <h1 className="max-w-3xl font-heading text-[32px] font-bold leading-[1.15] tracking-tight text-text sm:text-6xl sm:leading-[1.1]">
+        {lines.map((line) => (
+          <span key={line.chunks[0][0]} className="block">
+            {line.chunks.map((chunk, ci) => (
+              <span key={ci}>
+                <span className="inline-block whitespace-nowrap">
+                  {chunk.map((word, wi) => {
+                    const accent = line.accent?.[0] === ci && line.accent?.[1] === wi;
+                    const style = { "--i": i++ } as CSSProperties;
+                    return (
+                      <span key={wi}>
+                        {wi === 0 ? null : " "}
+                        <span className="hero-word" style={style}>
+                          {accent ? <span className="text-primary">{word}</span> : word}
+                        </span>
+                      </span>
+                    );
+                  })}
                 </span>
-              );
-            })}
+                {ci === line.chunks.length - 1 ? null : " "}
+              </span>
+            ))}
           </span>
         ))}
       </h1>
 
+      {/* Слов в h1 семь, последнее стартует на 0,18 с — подзаголовок и кнопки идут сразу следом. */}
       <p
         className="hero-in mt-7 max-w-xl text-lg leading-relaxed text-text sm:text-xl"
-        style={delay(0.5)}
+        style={delay(0.25)}
       >
-        Dla przewoźników i dyspozytorów, którzy jeżdżą po Europie i umawiają się z klientem na
-        okno dostawy.
+        <span className="block">Kierowca wie, gdzie stanie. Ty wiesz, o której dojedzie.</span>
+        <span className="block">Wiecie to przed wyjazdem.</span>
       </p>
 
-      <div className="hero-in mt-10 flex flex-wrap items-center gap-x-8 gap-y-4" style={delay(0.62)}>
+      <div className="hero-in mt-10 flex flex-wrap items-center gap-x-8 gap-y-4" style={delay(0.37)}>
         <CtaLink
           href="#kontakt"
           className="rounded-full bg-primary px-7 py-3 font-heading text-base font-semibold text-on-primary"
@@ -73,9 +81,10 @@ export function Hero() {
         </a>
       </div>
 
-      {/* Честная строка статуса. Это не слабость, а фильтр. */}
-      <p className="hero-in mt-8 max-w-lg text-sm leading-relaxed text-muted" style={delay(0.74)}>
-        Jesteśmy na etapie pilotażu. Szukamy 3–5 flot, które sprawdzą to na swoich trasach.
+      {/* Кому и на какой стадии — одной тихой строкой. Стадия не слабость, а фильтр. */}
+      <p className="hero-in mt-8 max-w-lg text-sm leading-relaxed text-muted" style={delay(0.49)}>
+        Dla przewoźników i dyspozytorów. Etap pilotażu: szukamy 3–5 flot, które sprawdzą to na
+        swoich trasach.
       </p>
     </section>
   );

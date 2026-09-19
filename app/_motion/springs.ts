@@ -20,3 +20,13 @@ export const staggerParent = (stagger = 0.08): Variants => ({
   hidden: { transition: { duration: 0 } },
   visible: { transition: { staggerChildren: stagger, delayChildren: 0.05 } },
 });
+
+// Разделитель секций (Divider): линия растёт из центра и заметно перелетает —
+// ζ≈0.5, перелёт ~17 % (150 px → ~175 px и обратно), успокаивается за ~0.6 с.
+// На линии перелёт виден, на карточках он бы читался как дрожь.
+export const bouncy: Transition = { type: "spring", stiffness: 200, damping: 14, mass: 1 };
+
+export const divider: Variants = {
+  hidden: { scaleX: 0, transition: { duration: 0 } },
+  visible: { scaleX: 1, transition: bouncy },
+};
