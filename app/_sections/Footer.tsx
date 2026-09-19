@@ -3,12 +3,14 @@
 // проверяется в CEIDG за десять секунд (NOT_NOW.md, 2026-09-13). Вместо них —
 // имя инкубатора и прямо названная стадия проекта.
 // Почты здесь нет: она стоит в S8 сразу над футером (DECISIONS.md, 2026-09-13).
+import { Logo } from "./Logo";
+
 export function Footer() {
   return (
-    <footer className="border-t border-surface-2">
+    <footer>
       <div className="mx-auto flex max-w-5xl flex-col gap-3 px-5 py-12">
-        <p className="font-heading text-lg font-bold tracking-tight text-text">
-          Convoy<span className="text-primary">Mind</span>
+        <p>
+          <Logo />
         </p>
         {/* Тихая строка: кто ищет — прочитает, остальным не мешает. Без логотипа
             и без ссылки — ссылка уводит с лендинга (решение владельца 2026-09-13). */}

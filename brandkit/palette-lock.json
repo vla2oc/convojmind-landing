@@ -1,0 +1,12 @@
+{
+  "source_summary": "Official landing palette 70-20-10 set by the owner on 2026-09-19 (app/globals.css, docs/LANDING_PLAN.md §3).",
+  "palette": {
+    "colors": [
+      { "hex": "#0d0d0d", "name": "bg", "role": "background" },
+      { "hex": "#224f10", "name": "secondary", "role": "primary" },
+      { "hex": "#9EF01A", "name": "primary", "role": "accent" },
+      { "hex": "#f5f5f5", "name": "text", "role": "text" }
+    ],
+    "gradients": []
+  }
+}

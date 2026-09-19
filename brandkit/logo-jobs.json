@@ -1,0 +1,11 @@
+{
+  "generated": "2026-09-19T21:14Z",
+  "model": "recraft_v4_1",
+  "params": { "model_type": "vector", "resolution": "2k", "aspect_ratio": "1:1", "background_color": "#0d0d0d" },
+  "credits_per_job": 10,
+  "candidates": [
+    { "index": 1, "job_id": "54b37933-9260-4672-8cdd-c01b423eeb87", "svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JYTIc9ATLz9SgKhKLPeTg4p6di/hf_20260919_211411_54b37933-9260-4672-8cdd-c01b423eeb87.svg", "local": "brandkit/logo-candidate-1.svg", "colors": ["#9EF01A"] },
+    { "index": 2, "job_id": "33f4c760-94a6-4d19-ab46-072da4ecb3fd", "svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JYTIc9ATLz9SgKhKLPeTg4p6di/hf_20260919_211454_33f4c760-94a6-4d19-ab46-072da4ecb3fd.svg", "local": "brandkit/logo-candidate-2.svg", "colors": ["#f5f5f5", "#9EF01A"] },
+    { "index": 3, "job_id": "b1f08fe7-3960-48c1-bb2a-c1ebf8c5ac6d", "svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JYTIc9ATLz9SgKhKLPeTg4p6di/hf_20260919_211454_b1f08fe7-3960-48c1-bb2a-c1ebf8c5ac6d.svg", "local": "brandkit/logo-candidate-3.svg", "colors": ["#9EF01A"] }
+  ]
+}

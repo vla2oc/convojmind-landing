@@ -1,0 +1,8 @@
+{
+  "source_summary": "Official landing typography set by the owner on 2026-09-08: Montserrat 700/600 for headings via next/font, system stack (Spline Sans/Inter/system-ui) for body.",
+  "typography": {
+    "display": { "family": "Montserrat", "source": "google:Montserrat", "style": "normal", "weight": 700 },
+    "body": { "family": "Inter", "source": "google:Inter", "style": "normal", "weight": 400 },
+    "font_links": ["https://fonts.google.com/specimen/Montserrat", "https://fonts.google.com/specimen/Inter"]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "brandbookElements": [],
+  "essentialKitApproved": true,
+  "logo": {
+    "approvalSummary": "Owner selected candidate 3, the tachograph chart disc, on 2026-09-19.",
+    "asset": {
+      "id": "b1f08fe7-3960-48c1-bb2a-c1ebf8c5ac6d",
+      "path": "/Users/vladyslavkurochka/work/develop/convojmind-landing/brandkit/logo-candidate-3.svg",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JYTIc9ATLz9SgKhKLPeTg4p6di/hf_20260919_211454_b1f08fe7-3960-48c1-bb2a-c1ebf8c5ac6d.svg"
+    },
+    "geometryFingerprint": "cbbf910c75374c5f4cf02cc6b6945a78471f3eead999473162895571e3dc300d",
+    "name": "ConvoyMind tachograph disc",
+    "origin": "brandkit_generated",
+    "paletteRevision": 1,
+    "revision": 1
+  },
+  "palette": {
+    "approvalSummary": "Official landing palette 70-20-10 set by the owner on 2026-09-19 (app/globals.css, docs/LANDING_PLAN.md §3).",
+    "colors": [
+      {
+        "hex": "#0d0d0d",
+        "name": "bg",
+        "role": "background"
+      },
+      {
+        "hex": "#224f10",
+        "name": "secondary",
+        "role": "primary"
+      },
+      {
+        "hex": "#9ef01a",
+        "name": "primary",
+        "role": "accent"
+      },
+      {
+        "hex": "#f5f5f5",
+        "name": "text",
+        "role": "text"
+      }
+    ],
+    "gradients": [],
+    "origin": "user_supplied",
+    "revision": 1
+  },
+  "typography": {
+    "approvalSummary": "Official landing typography set by the owner on 2026-09-08: Montserrat 700/600 for headings via next/font, system stack (Spline Sans/Inter/system-ui) for body.",
+    "body": {
+      "family": "Inter",
+      "source": "google:Inter",
+      "style": "normal",
+      "weight": 400
+    },
+    "display": {
+      "family": "Montserrat",
+      "source": "google:Montserrat",
+      "style": "normal",
+      "weight": 700
+    },
+    "fontLinks": [
+      "https://fonts.google.com/specimen/Montserrat",
+      "https://fonts.google.com/specimen/Inter"
+    ],
+    "origin": "user_supplied",
+    "revision": 1
+  },
+  "version": 4,
+  "visualAxes": {
+    "familiarExperimental": 50,
+    "geometricOrganic": 30,
+    "restrainedExpressive": 25
+  }
+}
