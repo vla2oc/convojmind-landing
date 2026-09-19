@@ -4,6 +4,9 @@ import { useRef } from "react";
 import { m, type Variants } from "motion/react";
 import { spring } from "../_motion/springs";
 import { useReveal } from "../_motion/useReveal";
+import type { Copy } from "../_copy/types";
+
+type Labels = Copy["how"]["diagram"];
 
 // Живая часть S3: шаги + схема, одно состояние на всё, чтобы номера шагов
 // загорались в такт схеме. Решение владельца 2026-09-13 отменило «ничего
@@ -85,13 +88,13 @@ const points = {
 const label = { fontSize: 18, fontFamily: "var(--font-display)" } as const;
 
 // Десктоп: горизонтальная схема. Масштабируется по ширине, min-width не нужен.
-function DiagramWide() {
+function DiagramWide({ t }: { t: Labels }) {
   const { start, stop1, stop2, alt, end, y } = points;
   return (
     <svg
       viewBox="0 0 720 160"
       role="img"
-      aria-label="Trasa z dwoma obowiązkowymi postojami: przerwa 45 minut i odpoczynek dobowy. Na drugim parkingu brak miejsc, obok alternatywa z miejscem. Na końcu okno dostawy."
+      aria-label={t.aria}
       className="hidden w-full sm:block"
     >
       {/* Серая подложка маршрута — видна всегда, поверх неё прорисовывается акцент */}
@@ -110,14 +113,14 @@ function DiagramWide() {
       {/* Wyjazd */}
       <m.circle cx={start} cy={y} r="7" fill="var(--text-muted)" variants={pop(T.line)} />
       <m.text x={start} y={y + 38} textAnchor="start" fill="var(--text-muted)" {...label} variants={fade(T.line + 0.15)}>
-        Wyjazd
+        {t.departure}
       </m.text>
 
       {/* przerwa 45 min */}
       <m.line x1={stop1} y1={y - 18} x2={stop1} y2={y - 38} stroke="var(--surface-2)" strokeWidth="2" variants={fade(T.stop1)} />
       <m.circle cx={stop1} cy={y} r="11" fill="var(--primary)" variants={pop(T.stop1)} />
       <m.text x={stop1} y={y - 48} textAnchor="middle" fill="var(--text)" {...label} variants={fade(T.stop1 + 0.15)}>
-        przerwa 45 min
+        {t.break45}
       </m.text>
 
       {/* odpoczynek dobowy → brak miejsc */}
@@ -125,34 +128,35 @@ function DiagramWide() {
       <m.circle cx={stop2} cy={y} r="11" variants={dim} />
       <m.circle cx={stop2} cy={y} r="17" fill="none" stroke="var(--danger)" strokeWidth="2" variants={ring} />
       <m.text x={stop2} y={y - 48} textAnchor="middle" fill="var(--text)" {...label} variants={fade(T.stop2 + 0.15)}>
-        odpoczynek dobowy
+        {t.dailyRest}
       </m.text>
       <m.text x={stop2} y={y + 38} textAnchor="middle" fill="var(--danger)" fontSize="16" fontFamily={label.fontFamily} variants={fade(T.conflict + 0.1)}>
-        brak miejsc
+        {t.noSpace}
       </m.text>
 
       {/* alternatywa */}
       <m.circle cx={alt} cy={y} r="11" fill="var(--primary)" variants={pop(T.alt)} />
       <m.text x={alt} y={y + 38} textAnchor="middle" fill="var(--primary)" {...label} variants={fade(T.alt + 0.15)}>
-        alternatywa
+        {t.alternative}
       </m.text>
 
       {/* Okno dostawy */}
       <m.circle cx={end} cy={y} r="7" fill="var(--text-muted)" variants={pop(T.end)} />
       <m.text x={end} y={y - 24} textAnchor="end" fill="var(--text-muted)" {...label} variants={fade(T.end + 0.15)}>
-        Okno dostawy
+        {t.window}
       </m.text>
     </svg>
   );
 }
 
 // Мобильный: та же последовательность вертикально. Скролл вбок ради картинки — плохой размен.
-const narrow: { label: string; kind: "edge" | "stop" | "off" | "alt"; note?: string; at: number }[] = [
-  { label: "Wyjazd", kind: "edge", at: T.line },
-  { label: "przerwa 45 min", kind: "stop", at: T.stop1 },
-  { label: "odpoczynek dobowy", kind: "off", note: "brak miejsc", at: T.stop2 },
-  { label: "alternatywa", kind: "alt", at: T.alt },
-  { label: "Okno dostawy", kind: "edge", at: T.end },
+type Point = { label: string; kind: "edge" | "stop" | "off" | "alt"; note?: string; at: number };
+const narrow = (t: Labels): Point[] => [
+  { label: t.departure, kind: "edge", at: T.line },
+  { label: t.break45, kind: "stop", at: T.stop1 },
+  { label: t.dailyRest, kind: "off", note: t.noSpace, at: T.stop2 },
+  { label: t.alternative, kind: "alt", at: T.alt },
+  { label: t.window, kind: "edge", at: T.end },
 ];
 
 const dotClass = {
@@ -164,10 +168,10 @@ const dotClass = {
 
 const textClass = { edge: "text-muted", stop: "text-text", off: "text-text", alt: "text-primary" };
 
-function DiagramNarrow() {
+function DiagramNarrow({ t }: { t: Labels }) {
   return (
     <ol className="flex flex-col gap-6 border-l-2 border-surface-2 pl-7 sm:hidden">
-      {narrow.map((p) => (
+      {narrow(t).map((p) => (
         <m.li key={p.label} className="relative leading-none" variants={fade(p.at)}>
           <span className={`absolute top-0.5 block rounded-full ${dotClass[p.kind]}`} aria-hidden="true" />
           <span className={textClass[p.kind]}>{p.label}</span>
@@ -184,7 +188,8 @@ function DiagramNarrow() {
 
 export type Step = { lead: string; quiet: string };
 
-export function HowItWorksLive({ steps }: { steps: Step[] }) {
+// Подписи схемы приходят словарём страницы: компонент один на оба языка.
+export function HowItWorksLive({ steps, labels }: { steps: Step[]; labels: Labels }) {
   const ref = useRef<HTMLDivElement>(null);
   const state = useReveal(ref);
 
@@ -203,8 +208,8 @@ export function HowItWorksLive({ steps }: { steps: Step[] }) {
       </ol>
 
       <div className="mt-14 rounded-2xl border border-surface-2 bg-surface p-6 sm:mt-16 sm:p-8">
-        <DiagramWide />
-        <DiagramNarrow />
+        <DiagramWide t={labels} />
+        <DiagramNarrow t={labels} />
       </div>
     </m.div>
   );

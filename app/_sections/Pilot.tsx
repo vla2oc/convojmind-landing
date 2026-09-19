@@ -1,25 +1,19 @@
 import { Reveal, RevealItem } from "../_motion/Reveal";
+import type { Copy } from "../_copy/types";
 
-// S6. Текст — docs/COPY.md, раздел S6.
+// S6. Текст — docs/COPY.md, раздел S6 (и «EN»).
 // Снимает главный страх B2B до того, как он возник (CLAUDE.md §5.7):
 // не «дорого», а «меня втянут во внедрение».
-const steps = [
-  "Rozmowa. Trzydzieści minut, bez prezentacji.",
-  "Bierzemy pięć tras, które już przejechałeś.",
-  "Pokazujemy grafik i okno przyjazdu dla każdej.",
-  "Porównujesz z tym, co było naprawdę.",
-];
-
-export function Pilot() {
+export function Pilot({ id, copy }: { id: string; copy: Copy["pilot"] }) {
   return (
-    <section id="pilotaz" className="scroll-mt-16">
+    <section id={id} className="scroll-mt-16">
       <div className="mx-auto max-w-5xl px-5 py-20 sm:py-24">
         <Reveal as="h2" className="font-heading text-2xl font-bold tracking-tight text-text sm:text-4xl">
-          Co się stanie, jeśli napiszesz
+          {copy.h2}
         </Reveal>
 
         <Reveal as="ol" stagger={0.1} className="mt-12 flex max-w-2xl flex-col gap-6">
-          {steps.map((step, i) => (
+          {copy.steps.map((step, i) => (
             <RevealItem as="li" key={step} className="flex gap-5">
               {/* Фиксированная ширина: у Montserrat цифры разной ширины, без неё текст
                   строк разъезжается по горизонтали. aria-hidden не ставим — preflight
@@ -39,12 +33,8 @@ export function Pilot() {
             hover
             className="rounded-2xl border border-secondary transition-[border-color] duration-300 ease-spring hover:border-primary data-pressed:border-primary p-6"
           >
-            <p className="font-heading text-lg font-semibold leading-snug text-text">
-              Bez instalacji. Bez integracji. Bez opłat.
-            </p>
-            <p className="mt-3 leading-relaxed text-text">
-              Jeśli się nie zgadza — mówisz nam to i koniec.
-            </p>
+            <p className="font-heading text-lg font-semibold leading-snug text-text">{copy.plate.lead}</p>
+            <p className="mt-3 leading-relaxed text-text">{copy.plate.quiet}</p>
           </RevealItem>
         </Reveal>
       </div>

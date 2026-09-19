@@ -1,8 +1,14 @@
-import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
-import { MotionProvider } from "./_motion/MotionProvider";
 import { Analytics } from "@vercel/analytics/next";
+import "../globals.css";
+import { MotionProvider } from "../_motion/MotionProvider";
+import type { Lang } from "../_copy/types";
+
+// Общая оболочка двух корневых layout — app/(pl)/layout.tsx и app/(en)/layout.tsx.
+// Два корневых layout нужны ради разного <html lang>: только корневой layout
+// рендерит <html>, а он у каждой группы свой (Next 16, layout.md «Root Layout»,
+// route-groups.md). Всё общее — шрифт, стили, провайдеры — живёт здесь, чтобы не
+// расходиться (DECISIONS.md, 2026-09-20).
 
 // subsets: latin-ext обязателен — без него польские ą ć ę ł ń ó ś ź ż
 // подставятся системным шрифтом. Пункт 6 критерия готовности.
@@ -13,17 +19,9 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-// Полные метаданные (description, canonical, OG) — шаг 6, после утверждения текста.
-export const metadata: Metadata = {
-  title: "ConvoyMind",
-};
-
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export function Document({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   return (
-    <html
-      lang="pl"
-      className={`${montserrat.variable} h-full antialiased`}
-    >
+    <html lang={lang} className={`${montserrat.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {/* Клиентский провайдер motion; children остаются серверными. */}
         <MotionProvider>{children}</MotionProvider>

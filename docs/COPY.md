@@ -227,6 +227,154 @@ RU: «Проект на этапе пилота. Создаётся в инку�
 
 ---
 
+## EN — английская версия (2026-09-20)
+
+**Статус:** черновик, свёрстан на `/en`. Решение владельца 2026-09-20 («переведём на английский»), снимает строку из `NOT_NOW.md`. Читатель тот же — диспетчер, только не польский: простой международный английский, без американизмов. **Перед публикацией текст обязан вычитать редактор-носитель**, как и польский: я не носитель.
+
+Это адаптация, не подстрочник. Где ушёл от польского — сказано.
+Общие замены: `MOP` → `rest area` (общеевропейское, польскую аббревиатуру за границей не знают); `parking` → `parking area`; `przerwa 45 min` → `45-min break`, `odpoczynek dobowy` → `daily rest` (термины 561/2006 по-английски); `okno dostawy` → `delivery window`. Водитель — `they`, не `he`: нейтрально и не режет глаз ни в одной стране.
+
+### S0. Шапка
+
+```
+[знак] ConvoyMind      Jak to działa    Pilotaż    PL | EN    [ Umów rozmowę ]     ← на польской странице
+[знак] ConvoyMind      How it works     Pilot      PL | EN    [ Book a call ]      ← на английской
+```
+
+Переключатель — привычная пара `PL | EN` в фиксированном порядке: текущий язык белый (не ссылка), другой приглушённый, при наведении лайм, при нажатии пружина. Ведёт на `/` и `/en`. Вариант со стрелкой (`English →`) владелец отклонил 2026-09-20: «как в обычных сайтах».
+
+### S1. Hero
+
+```
+**Route, tachograph and parking
+in one schedule.**
+
+Your driver knows where they'll park. You know when they'll arrive.
+Both of you know it before the truck leaves.
+
+[ Book a call ]        See how it works →
+
+For carriers and dispatchers. Pilot stage: we're looking for 3–5 fleets to test it on their own routes.
+```
+
+Акцент `--primary` — слово **`one`**. Связки без переноса: `and parking`, `in one`. Тест §5.8 №1 держится: планировщик не скажет `parking`, парковочное приложение не скажет `tachograph`.
+
+### S2. Проблема
+
+```
+Which of these evenings sounds familiar?
+```
+
+```
+**22:40. The driver calls: the rest area is full.**
+They drive on. Keep looking. Finally stop somewhere.
+That hour of driving is gone for good.
+```
+
+```
+**The customer asks when the goods will arrive.**
+You give a two-hour window. You can't be more precise.
+That buffer costs. The customer remembers it.
+```
+
+```
+**The tachograph doesn't negotiate.**
+You only see the infringement after the fact.
+The fine is the bill for what you didn't see.
+```
+
+### S3. Как это работает
+
+```
+How it works
+
+1  **You enter the route.**
+   From where, to where, departure time, what's left on the tachograph.
+
+2  **You get a schedule.**
+   Where the breaks are, at which parking areas, at what time.
+
+3  **Doesn't add up? You see it now, not on the road.**
+   You immediately get the nearest parking area with space.
+```
+
+Схема: `Departure` · `45-min break` · `daily rest` / `no space` · `alternative` · `Delivery window`.
+aria-label: `Route with two mandatory stops: a 45-minute break and a daily rest. The second parking area is full; an alternative with space is next to it. A delivery window at the end.`
+
+### S4. Чем это отличается
+
+```
+What's missing in what you already have
+
+What you need to know                     Who can do it today
+**When the driver *must* stop**           route planners · telematics
+**Whether there's *somewhere* to stop**   parking apps
+**When they'll *really* arrive**          ETA platforms
+
+**Everyone has each of these on its own. Together — *no one*.**
+A schedule without parking is legal only on paper.
+```
+
+### S5. Что ты с этого получаешь
+
+```
+What you get
+
+**Goal: you give a *±30-minute* window instead of a two-hour buffer.**
+That's a goal, not a result. You'll check it on five of your own routes.
+
+**The driver knows where they'll park before they leave.**
+The “where do I park” call happens before departure, not at 22:40.
+
+**You see a conflict with the rules before departure, not after the fact.**
+There's still time to move the departure, change the parking, warn the customer.
+```
+
+Единственное число на странице — `±30-minute`, слово `Goal` стоит в той же фразе тем же кеглем (§5.4).
+
+### S6. Пилот
+
+```
+What happens if you write to us
+
+1. A call. Thirty minutes, no slides.
+2. We take five routes you've already driven.
+3. We show you the schedule and the arrival window for each.
+4. You compare it with what really happened.
+
+**No installation. No integration. No fees.**
+If it doesn't add up — you tell us, and that's the end of it.
+```
+
+### S7. Приём заявки
+
+```
+Book a call
+
+Write one sentence: how many trucks you have and where they run.
+We reply within one working day.
+
+[ Write to us ]
+or copy the address: kurochka265@gmail.com
+```
+
+Тема письма в `mailto:` — `ConvoyMind pilot`.
+
+### Футер
+
+```
+[знак] ConvoyMind
+A project at pilot stage. Built at the Mobiscale incubator.
+```
+
+### Проверки (EN, по тексту выше)
+
+- «you/your» — 24, «we/us/our» — 7 (по блокам текста, скриптом). Клиент — подлежащее (§5.5).
+- Чисел, поданных как результат, — 0; единственное число `±30-minute` стоит рядом со словом `Goal`.
+- Запрещённых слов (`revolutionary`, `AI-powered`, `innovative`) — 0.
+
+---
+
 ## Проверки по контракту (текст 2026-09-19, по отрендерённой странице)
 
 - «ты/твой» и глаголы 2-го лица: 34; «мы/наш» и глаголы 1-го лица мн.: 7 (`szukamy`, `Bierzemy`, `Pokazujemy`, `nam`, `Odpowiadamy`, `do nas` ×2). Перевес ~5:1 (§5.5).

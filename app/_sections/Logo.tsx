@@ -20,11 +20,14 @@ export function Mark({ className }: { className?: string }) {
 }
 
 // Лого-связка: знак + слово. Одна и та же в шапке и в футере.
-export function Logo() {
+// compact — для шапки: ниже брейкпоинта xs (420 px) слово не вмещается рядом с языком
+// и кнопкой, поэтому уходит в sr-only — знак виден, имя остаётся для скринридера
+// (globals.css, DECISIONS.md 2026-09-20). В футере слово видно всегда.
+export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2.5 font-heading text-lg font-bold tracking-tight text-text">
       <Mark className="h-6 w-6 shrink-0 text-primary" />
-      <span>
+      <span className={compact ? "max-xs:sr-only" : undefined}>
         Convoy<span className="text-primary">Mind</span>
       </span>
     </span>
