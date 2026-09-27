@@ -87,7 +87,7 @@ const points = {
 
 const label = { fontSize: 18, fontFamily: "var(--font-display)" } as const;
 
-// Десктоп: горизонтальная схема. Масштабируется по ширине, min-width не нужен.
+// Схема (только от sm): горизонтальная линия маршрута. Масштабируется по ширине, min-width не нужен.
 function DiagramWide({ t }: { t: Labels }) {
   const { start, stop1, stop2, alt, end, y } = points;
   return (
@@ -95,7 +95,7 @@ function DiagramWide({ t }: { t: Labels }) {
       viewBox="0 0 720 160"
       role="img"
       aria-label={t.aria}
-      className="hidden w-full sm:block"
+      className="w-full"
     >
       {/* Серая подложка маршрута — видна всегда, поверх неё прорисовывается акцент */}
       <line x1={start} y1={y} x2={end} y2={y} stroke="var(--surface-2)" strokeWidth="6" strokeLinecap="round" />
@@ -149,43 +149,6 @@ function DiagramWide({ t }: { t: Labels }) {
   );
 }
 
-// Мобильный: та же последовательность вертикально. Скролл вбок ради картинки — плохой размен.
-type Point = { label: string; kind: "edge" | "stop" | "off" | "alt"; note?: string; at: number };
-const narrow = (t: Labels): Point[] => [
-  { label: t.departure, kind: "edge", at: T.line },
-  { label: t.break45, kind: "stop", at: T.stop1 },
-  { label: t.dailyRest, kind: "off", note: t.noSpace, at: T.stop2 },
-  { label: t.alternative, kind: "alt", at: T.alt },
-  { label: t.window, kind: "edge", at: T.end },
-];
-
-const dotClass = {
-  edge: "-left-[35px] h-3 w-3 bg-muted",
-  stop: "-left-[39px] h-5 w-5 bg-primary",
-  off: "-left-[39px] h-5 w-5 bg-muted ring-2 ring-danger",
-  alt: "-left-[39px] h-5 w-5 bg-primary",
-};
-
-const textClass = { edge: "text-muted", stop: "text-text", off: "text-text", alt: "text-primary" };
-
-function DiagramNarrow({ t }: { t: Labels }) {
-  return (
-    <ol className="flex flex-col gap-6 border-l-2 border-surface-2 pl-7 sm:hidden">
-      {narrow(t).map((p) => (
-        <m.li key={p.label} className="relative leading-none" variants={fade(p.at)}>
-          <span className={`absolute top-0.5 block rounded-full ${dotClass[p.kind]}`} aria-hidden="true" />
-          <span className={textClass[p.kind]}>{p.label}</span>
-          {p.note ? (
-            <m.span className="mt-2 block text-sm text-danger" variants={fade(T.conflict + 0.1)}>
-              {p.note}
-            </m.span>
-          ) : null}
-        </m.li>
-      ))}
-    </ol>
-  );
-}
-
 export type Step = { lead: string; quiet: string };
 
 // Подписи схемы приходят словарём страницы: компонент один на оба языка.
@@ -207,9 +170,9 @@ export function HowItWorksLive({ steps, labels }: { steps: Step[]; labels: Label
         ))}
       </ol>
 
-      <div className="mt-14 rounded-2xl border border-surface-2 bg-surface p-6 sm:mt-16 sm:p-8">
+      {/* Схема — только от sm. На телефоне её нет: решение владельца 2026-09-27 (DECISIONS.md). */}
+      <div className="mt-16 hidden rounded-2xl border border-surface-2 bg-surface p-8 sm:block">
         <DiagramWide t={labels} />
-        <DiagramNarrow t={labels} />
       </div>
     </m.div>
   );
