@@ -64,6 +64,8 @@ Trasa, tachograf i parking w jednym grafiku. Kierowca wie, gdzie stanie, ty wies
 
 - [2026-09-27] «Jak to działa»: на телефоне (< 640 px) схема маршрута убрана совсем — владелец («убрать именно сам график с точками и с линией»). `DiagramNarrow` удалён из `app/_sections/HowItWorksLive.tsx`, карточка схемы — `hidden sm:block`; три шага остались. Запись в `docs/DECISIONS.md`. `[проверено]`: lint, tsc, build чистые; в HTML `/` и `/en` карточка с `hidden … sm:block`, `sm:hidden` больше нет. Не проверено глазами: расширение Chrome не подключалось. Не закоммичено.
 
+- [2026-09-27] Логотип: диск тахографа заменён мозгом из файла владельца (`~/Downloads/brain-svgrepo-com 1.svg` → `brandkit/brain-svgrepo-com.svg`). `app/_sections/Logo.tsx` (Mark: 15 путей, viewBox `10 72 782 538`, лайм → currentColor, тени хексами; Logo: `h-6 w-auto`), `app/icon.svg`, `app/apple-icon.png` 180×180 (headless Brave). Запись в `docs/DECISIONS.md`. `[проверено]`: lint, build чистые; `/`, `/icon.svg`, `/apple-icon.png` статические; превью headless: знак на 24 px рядом со словом, фавикон 16/32 на белом читается. Не проверено: лицензия svgrepo, живой Safari/iOS. Не закоммичено.
+
 ## Сейчас в работе
 
 Английская версия закоммичена и запушена (`87dfe81`); английский текст ещё не вычитан носителем. Аналитика начнёт считать после деплоя на Vercel — проекта на Vercel в репозитории ещё нет (`.vercel/` отсутствует).
